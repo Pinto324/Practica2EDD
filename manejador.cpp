@@ -8,6 +8,9 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "Arbol/ArbolAVL.h"
+#include "Arbol/Nodo.h"
+
 
 manejador::manejador(std::string * a) {
     Th1 = a;
@@ -16,7 +19,12 @@ manejador::manejador(std::string * a) {
 };
 
 //metodo para Crear el arbol
-std::string crearArbol(){
+std::string manejador::crearArbol(std::string valor, std::string Tipo){
+    Informacion Info = new Informacion();
+    Nodo nodo = new Nodo();
+
+    ManejadorArbol.
+    Arbol.
     return "XD";
 }
 //metodo principal

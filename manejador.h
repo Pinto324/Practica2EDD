@@ -9,6 +9,8 @@
 #include <vector>
 #include <string>
 #include "hash.h"
+#include "Arbol/ArbolAVL.h"
+
 class manejador {
     private:
     std::string * Th1;
@@ -16,12 +18,14 @@ class manejador {
     static const double FACTOR_CARGA_MAXIMO;
     int elementos;
     hash ManejadorHash;
+    ArbolAVL ManejadorArbol;
+
     public:
         manejador(std::string *);
         void Consola();
 
     std::vector<std::string> split(const std::__cxx11::basic_string<char> &str, char delim);
-
+    std::string crearArbol();
     void procesarComando(const std::string &comando);
 
     void CrearGrupoNuevo(std::vector<std::string> Datos, std::string *tablaNueva);

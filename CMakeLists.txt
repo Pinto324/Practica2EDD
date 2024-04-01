@@ -7,4 +7,11 @@ add_executable(GestionContactos main.cpp
         manejador.cpp
         manejador.h
         hash.cpp
-        hash.h)
+        hash.h
+        Arbol/Informacion.cpp
+        Arbol/Informacion.h
+        Arbol/Informacion.h
+        Arbol/Nodo.cpp
+        Arbol/Nodo.h
+        Arbol/ArbolAVL.cpp
+        Arbol/ArbolAVL.h)
