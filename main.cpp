@@ -2,7 +2,8 @@
 #include "manejador.h"
 int main() {
     bool Sigo = true;
-    manejador Mj;
+    auto* TablaHash = new std::string[5];
+    manejador Mj = *new manejador(TablaHash);
     std::cout << "Bienvenido al Sistema de Gestión de Contactos." << std::endl;
     while (Sigo){
         int opcion;

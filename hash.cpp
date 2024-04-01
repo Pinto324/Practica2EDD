@@ -8,6 +8,6 @@ hash::hash() {
 
 }
 
-hash::CrearTabla(){
+void hash::CrearTabla(){
 
 }

@@ -11,8 +11,7 @@ private:
 
 public:
     hash();
-
-
+    void CrearTabla();
 };
 
 

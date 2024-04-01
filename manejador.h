@@ -11,14 +11,20 @@
 
 class manejador {
     private:
+    std::string * Th1;
+    int valorArreglo;
+    static const double FACTOR_CARGA_MAXIMO;
+    int elementos;
 
     public:
-        manejador();
+        manejador(std::string *);
         void Consola();
 
     std::vector<std::string> split(const std::__cxx11::basic_string<char> &str, char delim);
 
     void procesarComando(const std::string &comando);
+
+    std::string *CrearGrupoNuevo(std::vector<std::string> Datos, std::string *tablaNueva);
 };
 
 
