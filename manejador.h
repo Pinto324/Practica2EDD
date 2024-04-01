@@ -8,14 +8,14 @@
 
 #include <vector>
 #include <string>
-
+#include "hash.h"
 class manejador {
     private:
     std::string * Th1;
     int valorArreglo;
     static const double FACTOR_CARGA_MAXIMO;
     int elementos;
-
+    hash ManejadorHash;
     public:
         manejador(std::string *);
         void Consola();
@@ -24,7 +24,7 @@ class manejador {
 
     void procesarComando(const std::string &comando);
 
-    std::string *CrearGrupoNuevo(std::vector<std::string> Datos, std::string *tablaNueva);
+    void CrearGrupoNuevo(std::vector<std::string> Datos, std::string *tablaNueva);
 };
 
 

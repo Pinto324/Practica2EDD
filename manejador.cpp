@@ -14,56 +14,10 @@ manejador::manejador(std::string * a) {
     valorArreglo = 5;
     elementos = 0;
 };
-//metodos privados
-//metodo para el hash
-int funcionHash(const std::string& clave, const int size) {
-    int hash = 0;
-    for (char c : clave) {
-        hash += c;
-    }
-    return hash % size;
-}
-
-void rehash(int* size, std::string*& tablaVieja) {
-    int nuevoTamano = *size * 2;
-    auto* nuevaTabla = new std::string[nuevoTamano];
-
-    // Reinsertar todos los elementos en la nueva tabla hash
-    for (int i = 0; i < *size; ++i) {
-        if (!tablaVieja[i].empty()) {
-            int nuevoIndice = funcionHash(tablaVieja[i], nuevoTamano);
-            while (!nuevaTabla[nuevoIndice].empty()) {
-                nuevoIndice = (nuevoIndice + 1) % nuevoTamano; // Manejar colisiones con linear probing
-            }
-            nuevaTabla[nuevoIndice] = tablaVieja[i];
-        }
-    }
-
-    // Liberar la memoria de la antigua tabla
-    delete[] tablaVieja;
-
-    // Actualizar la tabla y el tamaño
-    tablaVieja = nuevaTabla;
-    *size = nuevoTamano;
-}
-
-void insertar(int *size, const std::string& nombre, std::string* Meter, std::string* datos, int * elementos, double carga) {
-    if ((double)*elementos / *size >= carga) {
-        rehash(size, datos);
-    }
-
-    int indice = funcionHash(nombre, *size);
-    while (!datos[indice].empty()) {
-        indice = (indice + 1) % *size; // Manejar colisiones con linear probing
-    }
-    std::cout << &Meter<< std::endl;
-    datos[indice - 1] = *Meter;
-    (*elementos)++;
-}
 
 //metodo para Crear el arbol
-std::string* crearArbol(){
-    return (std::string *) "XD";
+std::string crearArbol(){
+    return "XD";
 }
 //metodo principal
 void manejador::procesarComando(const std::string &comando){
@@ -77,12 +31,17 @@ void manejador::procesarComando(const std::string &comando){
         // Obtener el índice donde comienza la sección "FIELDS"
         size_t indice_fields = comando.find("FIELDS");
         if (indice_fields != std::string::npos) {
-            std::string fields_section = comando.substr(indice_fields + 7); // El +7 es para saltar "FIELDS "
+            std::string fields_section = comando.substr(indice_fields +8); // El +7 es para saltar "FIELDS "
             fields_section.pop_back();
             fields_section.pop_back();
             // Dividir los campos
             std::vector<std::string> campos = split(fields_section, ',');
-            insertar(&valorArreglo, palabras[2], CrearGrupoNuevo(campos,tablaNueva),Th1,&elementos,0.6);
+            CrearGrupoNuevo(campos,tablaNueva);
+            std::stringstream ss;
+            ss << &tablaNueva[0];
+            std::string direccionDeMemoria = ss.str();
+            ManejadorHash.insertar(&valorArreglo, palabras[2], direccionDeMemoria,Th1,&elementos,0.6);
+            std::cout << "chi funco." << std::endl;
         }
     } else if (palabras[0] == "ADD" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
         // Procesar comando para agregar contacto
@@ -131,7 +90,7 @@ void manejador::Consola() {
     }
 }
 //metodo encargado si se crea un nuevo grupo:
-std::string* manejador::CrearGrupoNuevo(std::vector<std::string> Datos, std::string* tablaNueva){
+void manejador::CrearGrupoNuevo(std::vector<std::string> Datos, std::string* tablaNueva){
     int val = 5;
     int elementos = 0;
     for (const auto &campo : Datos) {
@@ -142,9 +101,8 @@ std::string* manejador::CrearGrupoNuevo(std::vector<std::string> Datos, std::str
         // Dividir el campo en nombre y tipo
         std::vector<std::string> nombre_tipo = split(campo_trimmed, ' ');
         if (nombre_tipo.size() == 2) {
-            insertar(&val, nombre_tipo[0],crearArbol(),tablaNueva,&elementos,0.6);
+            ManejadorHash.insertar(&val, nombre_tipo[0],crearArbol(),tablaNueva,&elementos,0.6);
         }
     }
-    return tablaNueva;
 }
 
