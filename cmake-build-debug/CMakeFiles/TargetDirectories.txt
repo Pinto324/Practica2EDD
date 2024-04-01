@@ -1,0 +1,3 @@
+C:/Users/branp/CLionProjects/GestionContactos/cmake-build-debug/CMakeFiles/GestionContactos.dir
+C:/Users/branp/CLionProjects/GestionContactos/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/branp/CLionProjects/GestionContactos/cmake-build-debug/CMakeFiles/rebuild_cache.dir
