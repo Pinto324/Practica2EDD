@@ -5,19 +5,20 @@
 #ifndef GESTIONCONTACTOS_ARBOLAVL_H
 #define GESTIONCONTACTOS_ARBOLAVL_H
 #include "Nodo.h"
-
+#include "../ListaDoblemente/Controlador.h"
 class ArbolAVL {
 public:
     Nodo* raiz;
     ArbolAVL() : raiz(nullptr) {}
 
-    Nodo * insertar(Informacion dato);
 
     void recorrerInorden();
 
-    Nodo *insertar(Nodo *nodo, Informacion dato);
+    Nodo *insertar(Informacion dato, Controlador Lista);
 
     void recorrerInorden(Nodo *nodo);
+
+    Nodo *insertar(Nodo *nodo, Informacion dato, Controlador Lista);
 };
 
 

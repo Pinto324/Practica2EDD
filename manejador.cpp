@@ -21,22 +21,15 @@ manejador::manejador(Celda * a) {
     elementos = 0;
 };
 
-void manejador::InsertarContenidoArbol(ArbolAVL* arbol, std::string contenido){
-    Informacion info = *new Informacion(contenido, "", nullptr);
-    ManejadorArbol.insertar(info);
-}
 //metodo para insertar contenido en un grupo
-void manejador::InsertarContenidoTabla2(Celda*tabla, std::vector<std::string> Orden, std::vector<std::string> campos,ArbolAVL NuevoArbol){
+void manejador::InsertarContenidoTabla2(Celda*tabla, std::vector<std::string> Orden, std::vector<std::string> campos){
     if(Orden.size()==campos.size()){
-        Controlador Centinela = *new Controlador();
+        auto *Centinela = new Controlador();
         for (size_t i = 0; i < Orden.size(); ++i) {
-            if( ManejadorHash.buscarArbol(Orden[i],Ntabla2,tabla)){
-                ManejadorHash.buscarArbol(Orden[i],Ntabla2,tabla)->insertar(Informacion(campos[i],"", nullptr));
-            }else{
-                NuevoArbol.insertar(Informacion(Orden[i], "", nullptr));
-                tabla->Arbol = &NuevoArbol;
-            }
-
+                auto *Lista = new Controlador();
+                Lista->Tipo = Orden[i];
+                ManejadorHash.buscarArbol(Orden[i],Ntabla2,tabla)->insertar(Informacion(campos[i],"", Centinela), *Lista);
+                ManejadorLista.AgregarNodoDoble(ManejadorLista.RecorrerNodoD(Centinela),Lista);
         }
     }else{
         std::cout << "No escribiste todos los campos requerridos" << std::endl;
@@ -59,7 +52,8 @@ void manejador::procesarComando(const std::string &comando){
             fields_section.pop_back();
             // Dividir los campos
             std::vector<std::string> campos = split(fields_section, ',');
-            std::string cadena  = CrearGrupoNuevo(campos,tablaNueva);
+            ArbolAVL NuevoArbol;
+            std::string cadena  = CrearGrupoNuevo(campos,tablaNueva,NuevoArbol);
             ManejadorHash.insertarTabla1(&valorArreglo, palabras[2], &tablaNueva[0],Th1,&elementos,0.6,cadena);
             std::cout << "chi funco." << std::endl;
         }
@@ -74,7 +68,8 @@ void manejador::procesarComando(const std::string &comando){
                 // Dividir los campos
                 std::vector<std::string> campos = split(fields_section, ',');
                 std::vector<std::string> ordenASeguir = split(Orden, ' ');
-
+                InsertarContenidoTabla2(ManejadorHash.buscarCelda(palabras[3], valorArreglo,Th1),ordenASeguir,campos);
+                std::cout << "chi funco." << std::endl;
             }
         }else{
             std::cout << "No se a encontrado el grupo al que te refieres." << std::endl;
@@ -118,7 +113,7 @@ void manejador::Consola() {
     }
 }
 //metodo encargado si se crea un nuevo grupo:
-std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * tablaNueva){
+std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * tablaNueva, ArbolAVL NuevoArbol){
     int val = 10;
     int elementos = 0;
     std::string orden = "";
@@ -130,10 +125,13 @@ std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * t
         // Dividir el campo en nombre y tipo
         std::vector<std::string> nombre_tipo = split(campo_trimmed, ' ');
         if (nombre_tipo.size() == 2) {
-            ManejadorHash.insertarTabla2(&val, nombre_tipo[0], nullptr,tablaNueva,&elementos,0.9);
+            NuevoArbol = *new ArbolAVL();
+            ManejadorHash.insertarTabla2(&val, nombre_tipo[0], &NuevoArbol,tablaNueva,&elementos,0.9);
             orden += nombre_tipo[0]+" ";
         }
     }
     return orden;
 }
-
+void manejador::imprimirTabla(){
+    ManejadorHash.imprimirTabla(Th1,valorArreglo);
+}

@@ -11,6 +11,7 @@
 #include "hash.h"
 #include "Arbol/ArbolAVL.h"
 #include "TablasHash/Celda.h"
+#include "ListaDoblemente/Lista.h"
 
 class manejador {
     private:
@@ -20,6 +21,7 @@ class manejador {
     int elementos;
     hash ManejadorHash;
     ArbolAVL ManejadorArbol;
+    Lista ManejadorLista;
     const int Ntabla2 = 10;
     public:
         manejador(Celda *);
@@ -29,14 +31,16 @@ class manejador {
     std::string crearArbol();
     void procesarComando(const std::string &comando);
 
-    std::string CrearGrupoNuevo(std::vector<std::string> Datos, Celda *tablaNueva);
-
     ArbolAVL * crearArbol(std::string Tipo);
 
     void InsertarContenidoArbol(Nodo *Nodo, std::string contenido);
 
-    void InsertarContenidoTabla2(Celda *tabla, std::vector<std::string> Orden, std::vector<std::string> campos,
-                                 ArbolAVL NuevoArbol);
+
+    std::string CrearGrupoNuevo(std::vector<std::string> Datos, Celda *tablaNueva, ArbolAVL NuevoArbol);
+
+    void InsertarContenidoTabla2(Celda *tabla, std::vector<std::string> Orden, std::vector<std::string> campos);
+
+    void imprimirTabla();
 };
 
 

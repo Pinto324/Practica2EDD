@@ -19,6 +19,7 @@ int main() {
                 Mj.Consola();
                 break;
             case 2:
+                Mj.imprimirTabla();
                 break;
             case 3:
                 break;

@@ -41,20 +41,26 @@ Nodo* rotacionIzquierda(Nodo* x) {
     return y;
 }
 
-Nodo* ArbolAVL::insertar(Nodo* nodo, Informacion dato) {
-    if (nodo == nullptr) return new Nodo(dato);
-    if (dato.DevolverValor() < nodo-> dato.DevolverValor()) {
-        nodo->izquierdo = insertar(nodo->izquierdo, dato);
+Nodo* ArbolAVL::insertar(Nodo* nodo, Informacion dato, Controlador Lista) {
+    if (nodo == nullptr) {
+        Lista.Info = new Nodo(dato);
+        return Lista.Info;
+    }
+
+    if (dato.DevolverValor() < nodo->dato.DevolverValor()) {
+        nodo->izquierdo = insertar(nodo->izquierdo, dato, Lista);
     } else if (dato.DevolverValor() > nodo->dato.DevolverValor()) {
-        nodo->derecho = insertar(nodo->derecho, dato);
+        nodo->derecho = insertar(nodo->derecho, dato, Lista);
     } else {
-        // Si el dato ya existe, no hacemos nada (en este caso, consideramos que los nombres son únicos)
+        // El dato ya existe, puedes manejarlo según tus necesidades
         return nodo;
     }
 
     nodo->altura = 1 + std::max(altura(nodo->izquierdo), altura(nodo->derecho));
 
     int balance = obtenerBalance(nodo);
+
+    // Realizar rotaciones si es necesario
 
     // Caso izquierda-izquierda
     if (balance > 1 && dato.DevolverValor() < nodo->izquierdo->dato.DevolverValor())
@@ -76,11 +82,15 @@ Nodo* ArbolAVL::insertar(Nodo* nodo, Informacion dato) {
         return rotacionIzquierda(nodo);
     }
 
+    // Si no se requieren rotaciones, retornar el nodo sin cambios
+
     return nodo;
 }
 
-Nodo * ArbolAVL::insertar(Informacion dato) {
-    raiz = insertar(raiz, dato);
+
+Nodo * ArbolAVL::insertar(Informacion dato, Controlador Lista) {
+    if(!raiz->dato.Tipo.empty())raiz= nullptr;
+    raiz = insertar(raiz, dato, Lista);
     return raiz;
 }
 

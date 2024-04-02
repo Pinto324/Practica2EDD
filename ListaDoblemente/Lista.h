@@ -9,7 +9,7 @@
 #include "Controlador.h"
 
 class Lista {
-
+public:
     Controlador *RecorrerNodoI(Controlador *Centinela);
 
     void AgregarNodoDoble(Controlador *temp, Controlador *Nuevo);

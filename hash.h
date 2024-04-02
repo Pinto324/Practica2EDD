@@ -25,6 +25,8 @@ public:
     void insertarTabla2(int *size, const std::string &nombre, ArbolAVL *Meter, Celda *datos, int *elementos, double carga);
 
     ArbolAVL *buscarArbol(const std::string &nombre, int size, Celda *datos);
+
+    void imprimirTabla(Celda *c, int size);
 };
 
 

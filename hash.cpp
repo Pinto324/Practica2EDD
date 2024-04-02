@@ -2,6 +2,7 @@
 // Created by branp on 31/03/2024.
 //
 
+#include <iostream>
 #include "hash.h"
 #include "TablasHash/Celda.h"
 
@@ -113,5 +114,12 @@ ArbolAVL * hash::buscarArbol(const std::string& nombre, int size, Celda* datos) 
         return datos[indice].Arbol;
     } else {
         return nullptr;
+    }
+}
+//metodo para imprimir tabla
+void hash::imprimirTabla(Celda* c, int size){
+    for (size_t i = 0; i < size; ++i) {
+        std::cout << c->Nombre << " | tabla:" << &c->Tabla <<std::endl;
+        c++;
     }
 }
