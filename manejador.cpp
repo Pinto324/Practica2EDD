@@ -20,19 +20,27 @@ manejador::manejador(Celda * a) {
     valorArreglo = 5;
     elementos = 0;
 };
-std::string direccionDeMemoriaComoString(Nodo* direccion) {
-    // Usamos reinterpret_cast para convertir la dirección de memoria a un tipo entero
-    // Luego, lo convertimos a una cadena utilizando std::to_string
-    std::stringstream ss;
-    ss << reinterpret_cast<std::uintptr_t>(direccion); // Convertir dirección de memoria a entero
-    return ss.str(); // Devuelve la dirección de memoria como una cadena
+
+void manejador::InsertarContenidoArbol(ArbolAVL* arbol, std::string contenido){
+    Informacion info = *new Informacion(contenido, "", nullptr);
+    ManejadorArbol.insertar(info);
 }
-//metodo para Crear el arbol
-std::string manejador::crearArbol(std::string Tipo){
-    auto * Le = new Controlador();
-    Informacion Infor = *new Informacion("", Tipo, Le);
-    Le->Info = ManejadorArbol.insertar(Infor);
-    return (direccionDeMemoriaComoString(Le->Info));
+//metodo para insertar contenido en un grupo
+void manejador::InsertarContenidoTabla2(Celda*tabla, std::vector<std::string> Orden, std::vector<std::string> campos,ArbolAVL NuevoArbol){
+    if(Orden.size()==campos.size()){
+        Controlador Centinela = *new Controlador();
+        for (size_t i = 0; i < Orden.size(); ++i) {
+            if( ManejadorHash.buscarArbol(Orden[i],Ntabla2,tabla)){
+                ManejadorHash.buscarArbol(Orden[i],Ntabla2,tabla)->insertar(Informacion(campos[i],"", nullptr));
+            }else{
+                NuevoArbol.insertar(Informacion(Orden[i], "", nullptr));
+                tabla->Arbol = &NuevoArbol;
+            }
+
+        }
+    }else{
+        std::cout << "No escribiste todos los campos requerridos" << std::endl;
+    }
 }
 //metodo principal
 void manejador::procesarComando(const std::string &comando){
@@ -42,7 +50,7 @@ void manejador::procesarComando(const std::string &comando){
         return;
     }
     if (palabras[0] == "ADD" && palabras[1] == "NEW-GROUP") {
-        auto* tablaNueva = new Celda [5];
+        auto* tablaNueva = new Celda [Ntabla2];
         // Obtener el índice donde comienza la sección "FIELDS"
         size_t indice_fields = comando.find("FIELDS");
         if (indice_fields != std::string::npos) {
@@ -52,16 +60,25 @@ void manejador::procesarComando(const std::string &comando){
             // Dividir los campos
             std::vector<std::string> campos = split(fields_section, ',');
             std::string cadena  = CrearGrupoNuevo(campos,tablaNueva);
-            std::stringstream ss;
-            ss << &tablaNueva[0];
-            std::string direccionDeMemoria = ss.str();
-            ManejadorHash.insertar(&valorArreglo, palabras[2], direccionDeMemoria,Th1,&elementos,0.6,cadena);
+            ManejadorHash.insertarTabla1(&valorArreglo, palabras[2], &tablaNueva[0],Th1,&elementos,0.6,cadena);
             std::cout << "chi funco." << std::endl;
         }
     } else if (palabras[0] == "ADD" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
-        std::string Direccion = reinterpret_cast<const char *>(ManejadorHash.buscar(palabras[3], valorArreglo,
-                                                                                    reinterpret_cast<std::string *>(Th1)));
+        if(ManejadorHash.buscarCelda(palabras[3], valorArreglo,Th1)){
+            std::string Orden = ManejadorHash.buscarCeldaOrden(palabras[3], valorArreglo,Th1);
+            size_t indice_fields = comando.find("(");
+            if (indice_fields != std::string::npos) {
+                std::string fields_section = comando.substr(indice_fields +1);
+                fields_section.pop_back();
+                fields_section.pop_back();
+                // Dividir los campos
+                std::vector<std::string> campos = split(fields_section, ',');
+                std::vector<std::string> ordenASeguir = split(Orden, ' ');
 
+            }
+        }else{
+            std::cout << "No se a encontrado el grupo al que te refieres." << std::endl;
+        }
     } else if (palabras[0] == "FIND" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
         // Procesar comando para buscar contacto
         if (palabras.size() < 7 || palabras[3] != "CONTACT-FIELD" || palabras[5] != "=") {
@@ -102,7 +119,7 @@ void manejador::Consola() {
 }
 //metodo encargado si se crea un nuevo grupo:
 std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * tablaNueva){
-    int val = 5;
+    int val = 10;
     int elementos = 0;
     std::string orden = "";
     for (const auto &campo : Datos) {
@@ -113,7 +130,7 @@ std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * t
         // Dividir el campo en nombre y tipo
         std::vector<std::string> nombre_tipo = split(campo_trimmed, ' ');
         if (nombre_tipo.size() == 2) {
-            ManejadorHash.insertar(&val, nombre_tipo[0],crearArbol(nombre_tipo[1]),tablaNueva,&elementos,0.6, "");
+            ManejadorHash.insertarTabla2(&val, nombre_tipo[0], nullptr,tablaNueva,&elementos,0.9);
             orden += nombre_tipo[0]+" ";
         }
     }

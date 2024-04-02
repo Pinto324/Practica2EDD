@@ -36,7 +36,7 @@ void rehash(int* size, Celda*& tablaVieja) {
     *size = nuevoTamano;
 }
 
-void hash::insertar(int *size, const std::string& nombre, const std::string& Meter, Celda * datos, int * elementos, double carga, const std::string& cadena) {
+void hash::insertarTabla1(int *size, const std::string& nombre, Celda* Meter, Celda * datos, int * elementos, double carga, const std::string& cadena) {
     if ((double)*elementos / *size >= carga) {
         rehash(size, datos);
     }
@@ -45,25 +45,72 @@ void hash::insertar(int *size, const std::string& nombre, const std::string& Met
     while (!datos[indice].orden.empty()) {
         indice = (indice + 1) % *size; // Manejar colisiones con linear probing
     }
-    const std::string& info = Meter;
     const std::string& orden = cadena;
-    datos[indice].tabla = info;
+    datos[indice].Tabla = Meter;
     datos[indice].orden = orden;
+    datos[indice].Nombre = nombre;
     (*elementos)++;
 }
-//metodo de hash para buscar
-std::string* hash::buscar(const std::string& nombre, int size, std::string* datos) {
+void hash::insertarTabla2(int *size, const std::string& nombre, ArbolAVL* Meter, Celda * datos, int * elementos, double carga) {
+    if ((double)*elementos / *size >= carga) {
+        rehash(size, datos);
+    }
+    int indice = funcionHash(nombre, *size);
+    while (!datos[indice].Nombre.empty()) {
+        indice = (indice + 1) % *size; // Manejar colisiones con linear probing
+    }
+    datos[indice].Arbol = Meter;
+    datos[indice].Nombre = nombre;
+    (*elementos)++;
+}
+//metodo de hash para buscar y devolver la dirección de memoria
+Celda * hash::buscarCelda(const std::string& nombre, int size, Celda* datos) {
     int indice = funcionHash(nombre, size);
     int intentos = 0;
-    while (!datos[indice].empty() && datos[indice] != nombre) {
+    while (!datos[indice].Tabla && datos[indice].Nombre != nombre) {
         indice = (indice + 1) % size; // Avanzar al siguiente índice
         intentos++;
         if (intentos == size) { // Evitar bucle infinito
             break;
         }
     }
-    if (datos[indice] == nombre) {
-        return &datos[indice];
+    if (datos[indice].Nombre == nombre) {
+        return datos[indice].Tabla;
+    } else {
+        return nullptr;
+    }
+}
+
+//metodo de hash para buscar y devolver la dirección de memoria
+std::string hash::buscarCeldaOrden(const std::string& nombre, int size, Celda* datos) {
+    int indice = funcionHash(nombre, size);
+    int intentos = 0;
+    while (!datos[indice].Tabla && datos[indice].Nombre != nombre) {
+        indice = (indice + 1) % size; // Avanzar al siguiente índice
+        intentos++;
+        if (intentos == size) { // Evitar bucle infinito
+            break;
+        }
+    }
+    if (datos[indice].Nombre == nombre) {
+        return datos[indice].orden;
+    } else {
+        return "";
+    }
+}
+//metodo de hash para buscar el arbol en mi tabla 2
+ArbolAVL * hash::buscarArbol(const std::string& nombre, int size, Celda* datos) {
+    int indice = funcionHash(nombre, size);
+    int intentos = 0;
+    while (!datos[indice].Arbol && datos[indice].Nombre != nombre) {
+        indice = (indice + 1) % size; // Avanzar al siguiente índice
+        intentos++;
+        if (intentos == size) { // Evitar bucle infinito
+            break;
+        }
+    }
+    if (datos[indice].Nombre == nombre) {
+        return datos[indice].Arbol;
     } else {
         return nullptr;
     }

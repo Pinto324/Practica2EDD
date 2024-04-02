@@ -20,7 +20,7 @@ class manejador {
     int elementos;
     hash ManejadorHash;
     ArbolAVL ManejadorArbol;
-
+    const int Ntabla2 = 10;
     public:
         manejador(Celda *);
         void Consola();
@@ -31,7 +31,12 @@ class manejador {
 
     std::string CrearGrupoNuevo(std::vector<std::string> Datos, Celda *tablaNueva);
 
-    std::string crearArbol(std::string Tipo);
+    ArbolAVL * crearArbol(std::string Tipo);
+
+    void InsertarContenidoArbol(Nodo *Nodo, std::string contenido);
+
+    void InsertarContenidoTabla2(Celda *tabla, std::vector<std::string> Orden, std::vector<std::string> campos,
+                                 ArbolAVL NuevoArbol);
 };
 
 

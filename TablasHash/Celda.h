@@ -8,11 +8,17 @@
 
 #include <string>
 
+// Declaración de avance de Nodo
+class ArbolAVL;
+
 class Celda {
 public:
     std::string Nombre;
     std::string orden;
-    std::string tabla;
+    Celda * Tabla;
+    ArbolAVL * Arbol;
+    int tamaño;
+    Celda(): Tabla(nullptr),Arbol(nullptr){}
 };
 
 

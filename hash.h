@@ -15,9 +15,16 @@ public:
     hash();
     void CrearTabla();
 
-    void insertar(int *size, const std::string &nombre, const std::string& Meter, Celda *datos, int *elementos, double carga, const std::string& cadena);
 
-    std::string *buscar(const std::string &nombre, int size, std::string *datos);
+    Celda *buscarCelda(const std::string &nombre, int size, Celda *datos);
+
+    void insertarTabla1(int *size, const std::string &nombre, Celda *Meter, Celda *datos, int *elementos, double carga,const std::string &cadena);
+
+    std::string buscarCeldaOrden(const std::string &nombre, int size, Celda *datos);
+
+    void insertarTabla2(int *size, const std::string &nombre, ArbolAVL *Meter, Celda *datos, int *elementos, double carga);
+
+    ArbolAVL *buscarArbol(const std::string &nombre, int size, Celda *datos);
 };
 
 
