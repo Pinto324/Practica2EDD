@@ -2,7 +2,7 @@
 #include "manejador.h"
 int main() {
     bool Sigo = true;
-    auto* TablaHash = new std::string[5];
+    auto* TablaHash = new Celda[5];
     manejador Mj = *new manejador(TablaHash);
     std::cout << "Bienvenido al Sistema de Gestión de Contactos." << std::endl;
     while (Sigo){

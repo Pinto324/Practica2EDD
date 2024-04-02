@@ -4,6 +4,7 @@
 
 #ifndef GESTIONCONTACTOS_NODO_H
 #define GESTIONCONTACTOS_NODO_H
+
 #include "Informacion.h"
 
 class Nodo {
@@ -15,6 +16,5 @@ public:
 
     Nodo(Informacion dato) : dato(dato), izquierdo(nullptr), derecho(nullptr), altura(1) {}
 };
-
 
 #endif //GESTIONCONTACTOS_NODO_H

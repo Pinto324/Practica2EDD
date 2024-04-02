@@ -1,5 +1,15 @@
 # ninja log v5
-0	139	7336611925833677	CMakeFiles/GestionContactos.dir/hash.cpp.obj	2a0a93146985a949
 776	968	7336993464662355	GestionContactos.exe	c1a29b8992270983
+21	643	7337238042852841	CMakeFiles/GestionContactos.dir/hash.cpp.obj	2a0a93146985a949
 18	770	7336993462727101	CMakeFiles/GestionContactos.dir/main.cpp.obj	e73182877ed8a62c
 2	775	7336993462776696	CMakeFiles/GestionContactos.dir/manejador.cpp.obj	7f13fbbc8dcc7b3b
+69	633	7337238042758596	CMakeFiles/GestionContactos.dir/TablasHash/Celda.cpp.obj	9c53f3f76de8ac66
+1	184	7337273473914701	build.ninja	9480abedc58569a8
+23	493	7337277578920097	CMakeFiles/GestionContactos.dir/Arbol/Nodo.cpp.obj	386668c78a7ecd84
+65	514	7337277579202821	CMakeFiles/GestionContactos.dir/ListaDoblemente/Lista.cpp.obj	658d0902002b940c
+32	516	7337277579153217	CMakeFiles/GestionContactos.dir/ListaDoblemente/Controlador.cpp.obj	a6541c4495ff2b4a
+45	519	7337277579178017	CMakeFiles/GestionContactos.dir/Arbol/Informacion.cpp.obj	f340d81772760f37
+28	923	7337277583359704	CMakeFiles/GestionContactos.dir/Arbol/ArbolAVL.cpp.obj	7775a4379ae43f1f
+3	928	7337277583414237	CMakeFiles/GestionContactos.dir/main.cpp.obj	e73182877ed8a62c
+4	517	7337277718252078	CMakeFiles/GestionContactos.dir/manejador.cpp.obj	7f13fbbc8dcc7b3b
+518	973	7337277722754829	GestionContactos.exe	182c972dada74f9d

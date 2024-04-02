@@ -11,10 +11,11 @@
 #include <cstdint>
 #include "Arbol/ArbolAVL.h"
 #include "Arbol/Nodo.h"
-#include "Objetos/Controlador.h"
+#include "ListaDoblemente/Controlador.h"
+#include "TablasHash/Celda.h"
 
 
-manejador::manejador(std::string * a) {
+manejador::manejador(Celda * a) {
     Th1 = a;
     valorArreglo = 5;
     elementos = 0;
@@ -41,7 +42,7 @@ void manejador::procesarComando(const std::string &comando){
         return;
     }
     if (palabras[0] == "ADD" && palabras[1] == "NEW-GROUP") {
-        auto* tablaNueva = new std::string[5];
+        auto* tablaNueva = new Celda [5];
         // Obtener el índice donde comienza la sección "FIELDS"
         size_t indice_fields = comando.find("FIELDS");
         if (indice_fields != std::string::npos) {
@@ -50,15 +51,16 @@ void manejador::procesarComando(const std::string &comando){
             fields_section.pop_back();
             // Dividir los campos
             std::vector<std::string> campos = split(fields_section, ',');
-            CrearGrupoNuevo(campos,tablaNueva);
+            std::string cadena  = CrearGrupoNuevo(campos,tablaNueva);
             std::stringstream ss;
             ss << &tablaNueva[0];
             std::string direccionDeMemoria = ss.str();
-            ManejadorHash.insertar(&valorArreglo, palabras[2], direccionDeMemoria,Th1,&elementos,0.6);
+            ManejadorHash.insertar(&valorArreglo, palabras[2], direccionDeMemoria,Th1,&elementos,0.6,cadena);
             std::cout << "chi funco." << std::endl;
         }
     } else if (palabras[0] == "ADD" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
-        std::string Direccion = reinterpret_cast<const char *>(ManejadorHash.buscar(palabras[3], valorArreglo, Th1));
+        std::string Direccion = reinterpret_cast<const char *>(ManejadorHash.buscar(palabras[3], valorArreglo,
+                                                                                    reinterpret_cast<std::string *>(Th1)));
 
     } else if (palabras[0] == "FIND" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
         // Procesar comando para buscar contacto
@@ -99,9 +101,10 @@ void manejador::Consola() {
     }
 }
 //metodo encargado si se crea un nuevo grupo:
-void manejador::CrearGrupoNuevo(std::vector<std::string> Datos, std::string* tablaNueva){
+std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * tablaNueva){
     int val = 5;
     int elementos = 0;
+    std::string orden = "";
     for (const auto &campo : Datos) {
         // Eliminar espacios en blanco al inicio y al final del campo
         std::string campo_trimmed = campo;
@@ -110,8 +113,10 @@ void manejador::CrearGrupoNuevo(std::vector<std::string> Datos, std::string* tab
         // Dividir el campo en nombre y tipo
         std::vector<std::string> nombre_tipo = split(campo_trimmed, ' ');
         if (nombre_tipo.size() == 2) {
-            ManejadorHash.insertar(&val, nombre_tipo[0],crearArbol(nombre_tipo[1]),tablaNueva,&elementos,0.6);
+            ManejadorHash.insertar(&val, nombre_tipo[0],crearArbol(nombre_tipo[1]),tablaNueva,&elementos,0.6, "");
+            orden += nombre_tipo[0]+" ";
         }
     }
+    return orden;
 }
 

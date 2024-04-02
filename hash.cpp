@@ -3,6 +3,7 @@
 //
 
 #include "hash.h"
+#include "TablasHash/Celda.h"
 
 hash::hash() {
 
@@ -18,13 +19,13 @@ int funcionHash(const std::string& clave, const int size) {
     return hash % size;
 }
 
-void rehash(int* size, std::string*& tablaVieja) {
+void rehash(int* size, Celda*& tablaVieja) {
     int nuevoTamano = *size * 2;
-    auto* nuevaTabla = new std::string[nuevoTamano];
+    auto* nuevaTabla = new Celda[nuevoTamano];
     for (int i = 0; i < *size; ++i) {
-        if (!tablaVieja[i].empty()) {
-            int nuevoIndice = funcionHash(tablaVieja[i], nuevoTamano);
-            while (!nuevaTabla[nuevoIndice].empty()) {
+        if (!tablaVieja[i].orden.empty()) {
+            int nuevoIndice = funcionHash(tablaVieja[i].Nombre, nuevoTamano);
+            while (!nuevaTabla[nuevoIndice].orden.empty()) {
                 nuevoIndice = (nuevoIndice + 1) % nuevoTamano; // Manejar colisiones con linear probing
             }
             nuevaTabla[nuevoIndice] = tablaVieja[i];
@@ -35,17 +36,19 @@ void rehash(int* size, std::string*& tablaVieja) {
     *size = nuevoTamano;
 }
 
-void hash::insertar(int *size, const std::string& nombre, std::string Meter, std::string* datos, int * elementos, double carga) {
+void hash::insertar(int *size, const std::string& nombre, const std::string& Meter, Celda * datos, int * elementos, double carga, const std::string& cadena) {
     if ((double)*elementos / *size >= carga) {
         rehash(size, datos);
     }
 
     int indice = funcionHash(nombre, *size);
-    while (!datos[indice].empty()) {
+    while (!datos[indice].orden.empty()) {
         indice = (indice + 1) % *size; // Manejar colisiones con linear probing
     }
-    std::string info = Meter;
-    datos[indice] = info;
+    const std::string& info = Meter;
+    const std::string& orden = cadena;
+    datos[indice].tabla = info;
+    datos[indice].orden = orden;
     (*elementos)++;
 }
 //metodo de hash para buscar

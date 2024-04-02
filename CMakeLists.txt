@@ -18,4 +18,6 @@ add_executable(GestionContactos main.cpp
         ListaDoblemente/Controlador.cpp
         ListaDoblemente/Controlador.h
         ListaDoblemente/Lista.cpp
-        ListaDoblemente/Lista.h)
+        ListaDoblemente/Lista.h
+        TablasHash/Celda.cpp
+        TablasHash/Celda.h)
