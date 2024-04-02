@@ -29,6 +29,8 @@ class manejador {
     void procesarComando(const std::string &comando);
 
     void CrearGrupoNuevo(std::vector<std::string> Datos, std::string *tablaNueva);
+
+    std::string crearArbol(std::string Tipo);
 };
 
 

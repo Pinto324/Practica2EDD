@@ -11,7 +11,7 @@ public:
     Nodo* raiz;
     ArbolAVL() : raiz(nullptr) {}
 
-    void insertar(Informacion dato);
+    Nodo * insertar(Informacion dato);
 
     void recorrerInorden();
 

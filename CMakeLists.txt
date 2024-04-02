@@ -14,4 +14,8 @@ add_executable(GestionContactos main.cpp
         Arbol/Nodo.cpp
         Arbol/Nodo.h
         Arbol/ArbolAVL.cpp
-        Arbol/ArbolAVL.h)
+        Arbol/ArbolAVL.h
+        ListaDoblemente/Controlador.cpp
+        ListaDoblemente/Controlador.h
+        ListaDoblemente/Lista.cpp
+        ListaDoblemente/Lista.h)

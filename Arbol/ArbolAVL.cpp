@@ -79,8 +79,9 @@ Nodo* ArbolAVL::insertar(Nodo* nodo, Informacion dato) {
     return nodo;
 }
 
-void ArbolAVL::insertar(Informacion dato) {
+Nodo * ArbolAVL::insertar(Informacion dato) {
     raiz = insertar(raiz, dato);
+    return raiz;
 }
 
 void ArbolAVL::recorrerInorden(Nodo* nodo) {

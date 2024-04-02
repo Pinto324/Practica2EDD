@@ -8,8 +8,10 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <cstdint>
 #include "Arbol/ArbolAVL.h"
 #include "Arbol/Nodo.h"
+#include "Objetos/Controlador.h"
 
 
 manejador::manejador(std::string * a) {
@@ -17,15 +19,19 @@ manejador::manejador(std::string * a) {
     valorArreglo = 5;
     elementos = 0;
 };
-
+std::string direccionDeMemoriaComoString(Nodo* direccion) {
+    // Usamos reinterpret_cast para convertir la dirección de memoria a un tipo entero
+    // Luego, lo convertimos a una cadena utilizando std::to_string
+    std::stringstream ss;
+    ss << reinterpret_cast<std::uintptr_t>(direccion); // Convertir dirección de memoria a entero
+    return ss.str(); // Devuelve la dirección de memoria como una cadena
+}
 //metodo para Crear el arbol
-std::string manejador::crearArbol(std::string valor, std::string Tipo){
-    Informacion Info = new Informacion();
-    Nodo nodo = new Nodo();
-
-    ManejadorArbol.
-    Arbol.
-    return "XD";
+std::string manejador::crearArbol(std::string Tipo){
+    auto * Le = new Controlador();
+    Informacion Infor = *new Informacion("", Tipo, Le);
+    Le->Info = ManejadorArbol.insertar(Infor);
+    return (direccionDeMemoriaComoString(Le->Info));
 }
 //metodo principal
 void manejador::procesarComando(const std::string &comando){
@@ -52,13 +58,8 @@ void manejador::procesarComando(const std::string &comando){
             std::cout << "chi funco." << std::endl;
         }
     } else if (palabras[0] == "ADD" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
-        // Procesar comando para agregar contacto
-        if (palabras.size() < 5) {
-            std::cout << "Error: Comando inválido." << std::endl;
-            return;
-        }
-        std::cout << "Agregando contacto al grupo: " << palabras[3] << std::endl;
-        // Aquí puedes llamar a una función para manejar la inserción de contactos
+        std::string Direccion = reinterpret_cast<const char *>(ManejadorHash.buscar(palabras[3], valorArreglo, Th1));
+
     } else if (palabras[0] == "FIND" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
         // Procesar comando para buscar contacto
         if (palabras.size() < 7 || palabras[3] != "CONTACT-FIELD" || palabras[5] != "=") {
@@ -109,7 +110,7 @@ void manejador::CrearGrupoNuevo(std::vector<std::string> Datos, std::string* tab
         // Dividir el campo en nombre y tipo
         std::vector<std::string> nombre_tipo = split(campo_trimmed, ' ');
         if (nombre_tipo.size() == 2) {
-            ManejadorHash.insertar(&val, nombre_tipo[0],crearArbol(),tablaNueva,&elementos,0.6);
+            ManejadorHash.insertar(&val, nombre_tipo[0],crearArbol(nombre_tipo[1]),tablaNueva,&elementos,0.6);
         }
     }
 }
