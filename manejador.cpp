@@ -25,15 +25,19 @@ manejador::manejador(Celda * a) {
 void manejador::InsertarContenidoTabla2(Celda*tabla, std::vector<std::string> Orden, std::vector<std::string> campos){
     if(Orden.size()==campos.size()){
         auto *Centinela = new Controlador();
+        ManejadorHash.imprimirTabla(tabla,Ntabla2);
         for (size_t i = 0; i < Orden.size(); ++i) {
                 auto *Lista = new Controlador();
                 Lista->Tipo = Orden[i];
                 ManejadorHash.buscarArbol(Orden[i],Ntabla2,tabla)->insertar(Informacion(campos[i],"", Centinela), *Lista);
                 ManejadorLista.AgregarNodoDoble(ManejadorLista.RecorrerNodoD(Centinela),Lista);
+                ManejadorArbol.recorrerInorden(
+                        ManejadorHash.buscarArbol(Orden[i], Ntabla2, tabla)->raiz);
         }
     }else{
         std::cout << "No escribiste todos los campos requerridos" << std::endl;
     }
+
 }
 //metodo principal
 void manejador::procesarComando(const std::string &comando){
@@ -44,6 +48,7 @@ void manejador::procesarComando(const std::string &comando){
     }
     if (palabras[0] == "ADD" && palabras[1] == "NEW-GROUP") {
         auto* tablaNueva = new Celda [Ntabla2];
+        Celda *Rehash = nullptr;
         // Obtener el índice donde comienza la sección "FIELDS"
         size_t indice_fields = comando.find("FIELDS");
         if (indice_fields != std::string::npos) {
@@ -53,14 +58,14 @@ void manejador::procesarComando(const std::string &comando){
             // Dividir los campos
             std::vector<std::string> campos = split(fields_section, ',');
             ArbolAVL NuevoArbol;
-            std::string cadena  = CrearGrupoNuevo(campos,tablaNueva,NuevoArbol);
-            ManejadorHash.insertarTabla1(&valorArreglo, palabras[2], &tablaNueva[0],Th1,&elementos,0.6,cadena);
+            std::string cadena  = CrearGrupoNuevo(campos,tablaNueva,&NuevoArbol);
+            Th1 = ManejadorHash.insertarTabla1(&valorArreglo, palabras[2], &tablaNueva[0],Th1, &elementos,0.6,cadena,Rehash);
             std::cout << "chi funco." << std::endl;
         }
     } else if (palabras[0] == "ADD" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
         if(ManejadorHash.buscarCelda(palabras[3], valorArreglo,Th1)){
             std::string Orden = ManejadorHash.buscarCeldaOrden(palabras[3], valorArreglo,Th1);
-            size_t indice_fields = comando.find("(");
+            size_t indice_fields = comando.find('(');
             if (indice_fields != std::string::npos) {
                 std::string fields_section = comando.substr(indice_fields +1);
                 fields_section.pop_back();
@@ -113,10 +118,11 @@ void manejador::Consola() {
     }
 }
 //metodo encargado si se crea un nuevo grupo:
-std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * tablaNueva, ArbolAVL NuevoArbol){
+std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * tablaNueva, ArbolAVL * NuevoArbol){
     int val = 10;
     int elementos = 0;
     std::string orden = "";
+    Celda *Rehash = nullptr;
     for (const auto &campo : Datos) {
         // Eliminar espacios en blanco al inicio y al final del campo
         std::string campo_trimmed = campo;
@@ -125,8 +131,8 @@ std::string manejador::CrearGrupoNuevo(std::vector<std::string> Datos, Celda * t
         // Dividir el campo en nombre y tipo
         std::vector<std::string> nombre_tipo = split(campo_trimmed, ' ');
         if (nombre_tipo.size() == 2) {
-            NuevoArbol = *new ArbolAVL();
-            ManejadorHash.insertarTabla2(&val, nombre_tipo[0], &NuevoArbol,tablaNueva,&elementos,0.9);
+            auto * Na = new ArbolAVL();
+            ManejadorHash.insertarTabla2(&val, nombre_tipo[0], Na,tablaNueva,&elementos,0.9,Rehash);
             orden += nombre_tipo[0]+" ";
         }
     }

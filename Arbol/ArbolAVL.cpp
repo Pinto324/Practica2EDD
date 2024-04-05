@@ -89,7 +89,6 @@ Nodo* ArbolAVL::insertar(Nodo* nodo, Informacion dato, Controlador Lista) {
 
 
 Nodo * ArbolAVL::insertar(Informacion dato, Controlador Lista) {
-    if(!raiz->dato.Tipo.empty())raiz= nullptr;
     raiz = insertar(raiz, dato, Lista);
     return raiz;
 }

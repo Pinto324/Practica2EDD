@@ -20,12 +20,13 @@ int funcionHash(const std::string& clave, const int size) {
     return hash % size;
 }
 
-void rehash(int* size, Celda*& tablaVieja) {
+Celda* rehash(int* size, Celda*& tablaVieja, Celda *nuevaTabla) {
     int nuevoTamano = *size * 2;
-    auto* nuevaTabla = new Celda[nuevoTamano];
+    nuevaTabla = new Celda[nuevoTamano];
     for (int i = 0; i < *size; ++i) {
-        if (!tablaVieja[i].orden.empty()) {
-            int nuevoIndice = funcionHash(tablaVieja[i].Nombre, nuevoTamano);
+        if (!tablaVieja[i].Nombre.empty()) {
+            std::string xd= tablaVieja[i].Nombre;
+            int nuevoIndice = funcionHash(xd, nuevoTamano);
             while (!nuevaTabla[nuevoIndice].orden.empty()) {
                 nuevoIndice = (nuevoIndice + 1) % nuevoTamano; // Manejar colisiones con linear probing
             }
@@ -35,11 +36,12 @@ void rehash(int* size, Celda*& tablaVieja) {
     delete[] tablaVieja;
     tablaVieja = nuevaTabla;
     *size = nuevoTamano;
+    return tablaVieja;
 }
 
-void hash::insertarTabla1(int *size, const std::string& nombre, Celda* Meter, Celda * datos, int * elementos, double carga, const std::string& cadena) {
+Celda * hash::insertarTabla1(int *size, const std::string& nombre, Celda* Meter, Celda * datos, int * elementos, double carga, const std::string& cadena, Celda *asd) {
     if ((double)*elementos / *size >= carga) {
-        rehash(size, datos);
+        datos = rehash(size, datos, asd);
     }
 
     int indice = funcionHash(nombre, *size);
@@ -51,10 +53,11 @@ void hash::insertarTabla1(int *size, const std::string& nombre, Celda* Meter, Ce
     datos[indice].orden = orden;
     datos[indice].Nombre = nombre;
     (*elementos)++;
+    return datos;
 }
-void hash::insertarTabla2(int *size, const std::string& nombre, ArbolAVL* Meter, Celda * datos, int * elementos, double carga) {
+void hash::insertarTabla2(int *size, const std::string& nombre, ArbolAVL* Meter, Celda * datos, int * elementos, double carga, Celda* rej) {
     if ((double)*elementos / *size >= carga) {
-        rehash(size, datos);
+        rehash(size, datos, rej);
     }
     int indice = funcionHash(nombre, *size);
     while (!datos[indice].Nombre.empty()) {
@@ -111,6 +114,7 @@ ArbolAVL * hash::buscarArbol(const std::string& nombre, int size, Celda* datos) 
         }
     }
     if (datos[indice].Nombre == nombre) {
+        ArbolAVL * XD = datos[indice].Arbol;
         return datos[indice].Arbol;
     } else {
         return nullptr;
@@ -119,7 +123,14 @@ ArbolAVL * hash::buscarArbol(const std::string& nombre, int size, Celda* datos) 
 //metodo para imprimir tabla
 void hash::imprimirTabla(Celda* c, int size){
     for (size_t i = 0; i < size; ++i) {
-        std::cout << c->Nombre << " | tabla:" << &c->Tabla <<std::endl;
-        c++;
+        if (c) {
+            std::cout << c->Nombre << " | tabla:" << c->Tabla <<"|Arbol: "<<c->Arbol<<std::endl;
+            c++;
+        } else {
+            std::cout << c->Nombre << " | tabla:" <<std::endl;
+            c++;
+            std::cout << "El puntero es nulo." << std::endl;
+        }
+
     }
 }

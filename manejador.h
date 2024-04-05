@@ -34,13 +34,13 @@ class manejador {
     ArbolAVL * crearArbol(std::string Tipo);
 
     void InsertarContenidoArbol(Nodo *Nodo, std::string contenido);
-
-
-    std::string CrearGrupoNuevo(std::vector<std::string> Datos, Celda *tablaNueva, ArbolAVL NuevoArbol);
+    
 
     void InsertarContenidoTabla2(Celda *tabla, std::vector<std::string> Orden, std::vector<std::string> campos);
 
     void imprimirTabla();
+
+    std::string CrearGrupoNuevo(std::vector<std::string> Datos, Celda *tablaNueva, ArbolAVL *NuevoArbol);
 };
 
 
