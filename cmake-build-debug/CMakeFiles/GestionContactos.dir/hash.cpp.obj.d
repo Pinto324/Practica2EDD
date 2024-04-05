@@ -143,4 +143,8 @@ CMakeFiles/GestionContactos.dir/hash.cpp.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/istream \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc \
  C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\hash.h \
- C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\TablasHash/Celda.h
+ C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\TablasHash/Celda.h \
+ C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\ListaDoblemente/Lista.h \
+ C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\ListaDoblemente/Controlador.h \
+ C:/Users/branp/Documents/NetBeansProjects/Proyecto2Lenguaje/Practica2EDD/Arbol/Nodo.h \
+ C:/Users/branp/Documents/NetBeansProjects/Proyecto2Lenguaje/Practica2EDD/Arbol/Informacion.h

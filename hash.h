@@ -7,7 +7,7 @@
 
 #include <string>
 #include "TablasHash/Celda.h"
-
+#include "ListaDoblemente/Lista.h"
 class hash {
 private:
 

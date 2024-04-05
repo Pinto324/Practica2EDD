@@ -7,7 +7,7 @@
 
 
 #include "Controlador.h"
-
+#include "../Arbol/Nodo.h"
 class Lista {
 public:
     Controlador *RecorrerNodoI(Controlador *Centinela);
@@ -15,6 +15,8 @@ public:
     void AgregarNodoDoble(Controlador *temp, Controlador *Nuevo);
 
     Controlador *RecorrerNodoD(Controlador *Centinela);
+
+    void ImprimirBuscar(Controlador *Centinela);
 };
 
 

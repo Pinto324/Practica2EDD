@@ -100,6 +100,21 @@ void ArbolAVL::recorrerInorden(Nodo* nodo) {
     std::cout << "Nombre: " << nodo->dato.DevolverValor() << ",Tipo: " << nodo->dato.Tipo << std::endl;
     recorrerInorden(nodo->derecho);
 }
+Controlador* ArbolAVL::buscarDato(Nodo* nodo, const std::string& datoBuscado, Controlador* listaResultados) {
+    if (nodo == nullptr) return listaResultados;
+
+    listaResultados = buscarDato(nodo->izquierdo, datoBuscado, listaResultados);
+
+    // Verificar si el dato del nodo coincide con el dato buscado
+    if (nodo->dato.DevolverValor() == datoBuscado) {
+        // Si coincide, agregarlo a la lista de resultados
+        listaResultados= nodo->dato.Direccion;
+    }
+
+    listaResultados = buscarDato(nodo->derecho, datoBuscado, listaResultados);
+
+    return listaResultados;
+}
 
 void ArbolAVL::recorrerInorden() {
     recorrerInorden(raiz);

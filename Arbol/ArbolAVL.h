@@ -6,6 +6,7 @@
 #define GESTIONCONTACTOS_ARBOLAVL_H
 #include "Nodo.h"
 #include "../ListaDoblemente/Controlador.h"
+#include "../ListaDoblemente/Lista.h"
 class ArbolAVL {
 public:
     Nodo* raiz;
@@ -19,6 +20,8 @@ public:
     void recorrerInorden(Nodo *nodo);
 
     Nodo *insertar(Nodo *nodo, Informacion dato, Controlador Lista);
+
+    Controlador *buscarDato(Nodo *nodo, const std::string &datoBuscado, Controlador *listaResultados);
 };
 
 

@@ -79,6 +79,7 @@ Celda * hash::buscarCelda(const std::string& nombre, int size, Celda* datos) {
         }
     }
     if (datos[indice].Nombre == nombre) {
+        Celda* xd = datos[indice].Tabla;
         return datos[indice].Tabla;
     } else {
         return nullptr;
@@ -120,6 +121,7 @@ ArbolAVL * hash::buscarArbol(const std::string& nombre, int size, Celda* datos) 
         return nullptr;
     }
 }
+
 //metodo para imprimir tabla
 void hash::imprimirTabla(Celda* c, int size){
     for (size_t i = 0; i < size; ++i) {

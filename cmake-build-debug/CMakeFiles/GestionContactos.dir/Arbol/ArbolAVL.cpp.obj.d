@@ -145,4 +145,7 @@ CMakeFiles/GestionContactos.dir/Arbol/ArbolAVL.cpp.obj: \
  C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\Arbol\ArbolAVL.h \
  C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\Arbol\Nodo.h \
  C:\Users\branp\Documents\NetBeansProjects\Proyecto2Lenguaje\Practica2EDD\Arbol\Informacion.h \
- C:/Users/branp/Documents/NetBeansProjects/Proyecto2Lenguaje/Practica2EDD/ListaDoblemente/Controlador.h
+ C:/Users/branp/Documents/NetBeansProjects/Proyecto2Lenguaje/Practica2EDD/ListaDoblemente/Controlador.h \
+ C:/Users/branp/Documents/NetBeansProjects/Proyecto2Lenguaje/Practica2EDD/ListaDoblemente/Lista.h \
+ C:/Users/branp/Documents/NetBeansProjects/Proyecto2Lenguaje/Practica2EDD/ListaDoblemente/Controlador.h \
+ C:/Users/branp/Documents/NetBeansProjects/Proyecto2Lenguaje/Practica2EDD/Arbol/Nodo.h

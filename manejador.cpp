@@ -25,17 +25,27 @@ manejador::manejador(Celda * a) {
 void manejador::InsertarContenidoTabla2(Celda*tabla, std::vector<std::string> Orden, std::vector<std::string> campos){
     if(Orden.size()==campos.size()){
         auto *Centinela = new Controlador();
-        ManejadorHash.imprimirTabla(tabla,Ntabla2);
         for (size_t i = 0; i < Orden.size(); ++i) {
                 auto *Lista = new Controlador();
                 Lista->Tipo = Orden[i];
                 ManejadorHash.buscarArbol(Orden[i],Ntabla2,tabla)->insertar(Informacion(campos[i],"", Centinela), *Lista);
                 ManejadorLista.AgregarNodoDoble(ManejadorLista.RecorrerNodoD(Centinela),Lista);
-                ManejadorArbol.recorrerInorden(
-                        ManejadorHash.buscarArbol(Orden[i], Ntabla2, tabla)->raiz);
         }
     }else{
         std::cout << "No escribiste todos los campos requerridos" << std::endl;
+    }
+
+}
+//metodo para buscar un dato
+void manejador::BuscarDato(Celda*tabla, std::vector<std::string> campos){
+    auto* Lista = new Controlador();
+    Nodo* nodo;
+    if(ManejadorHash.buscarArbol(campos[0],Ntabla2,tabla)){
+        nodo = ManejadorHash.buscarArbol(campos[0],Ntabla2,tabla)->raiz;
+        Lista = ManejadorArbol.buscarDato(nodo,campos[1],Lista);
+        ManejadorLista.ImprimirBuscar(Lista);
+    }else{
+        std::cout << "No se encontro el campo al que te refieres" << std::endl;
     }
 
 }
@@ -80,15 +90,17 @@ void manejador::procesarComando(const std::string &comando){
             std::cout << "No se a encontrado el grupo al que te refieres." << std::endl;
         }
     } else if (palabras[0] == "FIND" && palabras[1] == "CONTACT" && palabras[2] == "IN") {
-        // Procesar comando para buscar contacto
-        if (palabras.size() < 7 || palabras[3] != "CONTACT-FIELD" || palabras[5] != "=") {
-            std::cout << "Error: Comando inválido." << std::endl;
-            return;
-        }
         std::cout << "Buscando contacto en el grupo: " << palabras[3] << std::endl;
-        // Aquí puedes llamar a una función para manejar la búsqueda de contactos
-    } else {
-        std::cout << "Error: Comando no reconocido." << std::endl;
+        size_t indice_fields = comando.find("FIELD");
+        std::string fields_section = comando.substr(indice_fields +6);
+        fields_section.pop_back();
+        std::vector<std::string> campos = split(fields_section, '=');
+        if(ManejadorHash.buscarCelda(palabras[3], valorArreglo,Th1)){
+            Celda * celda = ManejadorHash.buscarCelda(palabras[3], valorArreglo,Th1);
+            BuscarDato(celda,campos);
+        }else {
+            std::cout << "No se encontro el grupo: " << palabras[3] << std::endl;
+        }
     }
 }
 

@@ -41,6 +41,8 @@ class manejador {
     void imprimirTabla();
 
     std::string CrearGrupoNuevo(std::vector<std::string> Datos, Celda *tablaNueva, ArbolAVL *NuevoArbol);
+
+    void BuscarDato(Celda *tabla, std::vector<std::string> campos);
 };
 
 
